@@ -2,7 +2,7 @@
 
 function countSheep(number) {
   if (number === 0) {
-    return 'All sheep jumped over the fence';
+    return "All sheep jumped over the fence";
   }
   console.log(`${number}:Another sheep jumps over the fence`);
   countSheep(number - 1);
@@ -13,7 +13,7 @@ console.log(countSheep(5));
 // 2. Power Calculator
 
 function powerCalculator(base, exponent) {
-  if (exponent < 0) return 'should return exponent should be >= 0';
+  if (exponent < 0) return "should return exponent should be >= 0";
   if (exponent === 0) return 1;
 
   return base * powerCalculator(base, exponent - 1);
@@ -24,14 +24,14 @@ console.log(powerCalculator(10, 3));
 //3. Reverse String
 
 function reverseString(string) {
-  if (string === '') {
-    return '';
+  if (string === "") {
+    return "";
   }
 
   return reverseString(string.slice(1)) + string[0];
 }
 
-console.log(reverseString('hello'));
+console.log(reverseString("hello"));
 
 // 4. nth Triangluar Number
 
@@ -47,24 +47,24 @@ console.log(nthTriangleNumber(5));
 
 // 5. String Splitter
 
-function stringSplitter(string, splitter, result = ['']) {
+function stringSplitter(string, splitter, result = [""]) {
   if (string.length === 0) {
     return result;
   }
 
   if (string[0] === splitter) {
-    result.push('');
+    result.push("");
   } else {
     result[result.length - 1] += string[0];
   }
   return stringSplitter(string.slice(1), splitter, result);
 }
 
-console.log(stringSplitter('02/20/2020', '/'));
+console.log(stringSplitter("02/20/2020", "/"));
 
 // 6. Fibonacci
 
-function fibonacci(number, result = ['']) {
+function fibonacci(number, result = [""]) {
   if (number === 1) {
     return [0, 1];
   } else {
@@ -89,83 +89,96 @@ console.log(factorial(5));
 
 // 8. Find a way out of the maze
 
-function findAWayOut(maze, x = 0, y = 0, path = '', paths = []) {
+function findAWayOut(maze, x = 0, y = 0, path = "", paths = []) {
   if (x < 0 || y < 0 || x >= maze.length || y >= maze[x].length) {
     return false;
   }
 
   let value = maze[x][y];
-  maze[x][y] = 'v';
-  if (value === '*' || value === 'v') {
+  maze[x][y] = "v";
+  if (value === "*" || value === "v") {
     return false;
   }
-  if (value === 'e') {
+  if (value === "e") {
     paths.push(path);
     return paths;
   }
 
-  let up = findAWayOut(maze, x - 1, y, path + 'u', paths);
-  let down = findAWayOut(maze, x + 1, y, path + 'd', paths);
-  let left = findAWayOut(maze, x, y - 1, path + 'l', paths);
-  let right = findAWayOut(maze, x, y + 1, path + 'r', paths);
+  let up = findAWayOut(maze, x - 1, y, path + "u", paths);
+  let down = findAWayOut(maze, x + 1, y, path + "d", paths);
+  let left = findAWayOut(maze, x, y - 1, path + "l", paths);
+  let right = findAWayOut(maze, x, y + 1, path + "r", paths);
 
   return paths;
 }
 
 let mySmallMaze = [
-  [' ', ' ', ' '],
-  [' ', '*', ' '],
-  [' ', ' ', 'e'],
+  [" ", " ", " "],
+  [" ", "*", " "],
+  [" ", " ", "e"],
 ];
 
 let maze = [
-  [' ', ' ', ' ', '*', ' ', ' ', ' '],
-  ['*', '*', ' ', '*', ' ', '*', ' '],
-  [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-  [' ', '*', '*', '*', '*', '*', ' '],
-  [' ', ' ', ' ', ' ', ' ', ' ', 'e'],
+  [" ", " ", " ", "*", " ", " ", " "],
+  ["*", "*", " ", "*", " ", "*", " "],
+  [" ", " ", " ", " ", " ", " ", " "],
+  [" ", "*", "*", "*", "*", "*", " "],
+  [" ", " ", " ", " ", " ", " ", "e"],
 ];
 
 console.log(findAWayOut(maze));
 
 // 9. Find ALL the ways out of the maze - Needs updating
 
-function findAWayOut(maze, x = 0, y = 0, path = '', paths = []) {
+function findAllWaysOut(maze, x = 0, y = 0, path = "", paths = []) {
   if (x < 0 || y < 0 || x >= maze.length || y >= maze[x].length) {
     return false;
   }
 
   let value = maze[x][y];
-  maze[x][y] = 'v';
-  if (value === '*' || value === 'v') {
+
+  const newMaze = maze.map((row, index) => {
+    if (index !== x) {
+      return row;
+    }
+    return row.map((value, index) => {
+      if (index !== y) {
+        return value;
+      }
+      return "v";
+    });
+  });
+  if (value === "*" || value === "v") {
     return false;
   }
-  if (value === 'e') {
+  if (value === "e") {
     paths.push(path);
     return paths;
   }
 
-  let up = findAWayOut(maze, x - 1, y, path + 'u', paths);
-  let down = findAWayOut(maze, x + 1, y, path + 'd', paths);
-  let left = findAWayOut(maze, x, y - 1, path + 'l', paths);
-  let right = findAWayOut(maze, x, y + 1, path + 'r', paths);
+  let up = findAllWaysOut(newMaze, x - 1, y, path + "u", paths);
+  let down = findAllWaysOut(newMaze, x + 1, y, path + "d", paths);
+  let left = findAllWaysOut(newMaze, x, y - 1, path + "l", paths);
+  let right = findAllWaysOut(newMaze, x, y + 1, path + "r", paths);
 
   return paths;
 }
 
 let mySmallMaze = [
-  [' ', ' ', ' '],
-  [' ', '*', ' '],
-  [' ', ' ', 'e'],
+  [" ", " ", " "],
+  [" ", "*", " "],
+  [" ", " ", "e"],
 ];
 
 let maze = [
-  [' ', ' ', ' ', '*', ' ', ' ', ' '],
-  ['*', '*', ' ', '*', ' ', '*', ' '],
-  [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-  [' ', '*', '*', '*', '*', '*', ' '],
-  [' ', ' ', ' ', ' ', ' ', ' ', 'e'],
+  [" ", " ", " ", "*", " ", " ", " "],
+  ["*", "*", " ", "*", " ", "*", " "],
+  [" ", " ", " ", " ", " ", " ", " "],
+  [" ", "*", "*", "*", "*", "*", " "],
+  [" ", " ", " ", " ", " ", " ", "e"],
 ];
+
+console.log(findAllWaysOut(maze));
 
 // 10. Anagrams - O(!n)
 
@@ -186,7 +199,7 @@ function getAnagrams(string, results = []) {
   return results;
 }
 
-console.log(getAnagrams('east'));
+console.log(getAnagrams("east"));
 
 // 11. Organization Chart
 
@@ -258,7 +271,7 @@ const organization = {
 
 function printOrganization(array, indent = 0) {
   for (let key in array) {
-    console.log(' '.repeat(indent), key);
+    console.log(" ".repeat(indent), key);
     printOrganization(array[key], indent + 4);
   }
 }
@@ -272,7 +285,7 @@ function convertToBinary(num) {
     let binary = Math.floor(num % 2);
     return convertToBinary(Math.floor(num / 2)) + binary;
   } else {
-    return '';
+    return "";
   }
 }
 console.log(convertToBinary(25));
